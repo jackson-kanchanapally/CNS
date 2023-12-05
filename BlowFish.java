@@ -1,34 +1,33 @@
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import javax.crypto.*;
+import java.util.*;
 
 public class BlowFish {
 
-    public static void main(String[] args) {
-        try {
-            String plainText = "Hello, this is a message to encrypt using Blowfish!";
-            String keyString = "MySecretKey"; 
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter String");
+        String plainText = sc.nextLine();
+        KeyGenerator keyGen = KeyGenerator.getInstance("Blowfish");
+        keyGen.init(128); // Set the key size to 128 bits (can be up to 448 bits)
+        // Generate a random Blowfish key
+        SecretKey secretKey = keyGen.generateKey();
+        System.out.println("Generated Key: " + secretKey);
 
-            byte[] keyData = keyString.getBytes(StandardCharsets.UTF_8);
-            SecretKey secretKey = new SecretKeySpec(keyData, "Blowfish");
+        // Create a Blowfish cipher instance
+        Cipher blowfishCipher = Cipher.getInstance("Blowfish");
 
-            Cipher cipher = Cipher.getInstance("Blowfish");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            byte[] encrypted = cipher.doFinal(plainText.getBytes());
+        blowfishCipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
-            String encryptedString = Base64.getEncoder().encodeToString(encrypted);
-            System.out.println("Encrypted: " + encryptedString);
+        byte[] encryptedBytes = blowfishCipher.doFinal(plainText.getBytes());
 
-            // Decryption
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            byte[] decrypted = cipher.doFinal(Base64.getDecoder().decode(encryptedString));
-            String decryptedString = new String(decrypted);
-            System.out.println("Decrypted: " + decryptedString);
+        System.out.println("Encrypted: " + encryptedBytes);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Initialize the cipher for decryption using the same key
+        blowfishCipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+        // Decrypt the encrypted text
+        byte[] decryptedBytes = blowfishCipher.doFinal(encryptedBytes);
+        String decryptedText = new String(decryptedBytes);
+        System.out.println("Decrypted: " + decryptedText);
     }
 }
