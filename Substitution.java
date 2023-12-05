@@ -24,11 +24,11 @@ public class Substitution {
             }
         }
         for (int i = 0; i < ct.length(); i++) {
-            char l = pt.charAt(i);
+            char l = ct.charAt(i);
             if (l == ' ') {
                 decrypt += l;
             } else {
-                for (int j = 0; j < str1.length(); j++) {
+                for (int j = 0; j < rev.length(); j++) {
                     char s = rev.charAt(j);
                     if (l == s) {
                         char es = str1.charAt(j);
