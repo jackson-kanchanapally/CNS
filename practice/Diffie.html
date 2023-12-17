@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label>prime</label>
+    <input type="number" id="prime">
+    <label>Base</label>
+    <input type="number" id="base">
+    <label>Private alice</label>
+    <input type="number" id="pubA">
+    <label>Private bob</label>
+    <input type="number" id="pubB">
+    <button onClick="cal()">Generate</button>
+    <p>Pub A : <span id="pa"></span></p>
+    <p>Pub B : <span id="pb"></span></p>
+    <p>Ex A : <span id="p"></span></p>
+    <p>Ex B : <span id="b"></span></p>
+    <script>
+   function cal(){
+    var prime=parseInt(document.getElementById("prime").value)
+        var base=parseInt(document.getElementById("base").value)
+        var puba=parseInt(document.getElementById("pubA").value)
+        var pubb=parseInt(document.getElementById("pubB").value)
+        var pi=Math.pow(base,puba)%prime;
+        var pib=Math.pow(base,pubb)%prime;
+        document.getElementById("pa").textContent=pi
+        document.getElementById("pb").textContent=pib
+        var a=Math.pow(pib,puba)%prime;
+        var b=Math.pow(pi,pubb)%prime;
+        document.getElementById("p").textContent=a
+        document.getElementById("b").textContent=b
+   }
+    </script>
+</body>
+</html>
