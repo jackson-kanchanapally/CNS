@@ -25,7 +25,8 @@ public class Rc4 {
             Scanner sc=new Scanner(System.in);
             System.out.println("Enter the text you want to Encrypt: ");
             String originalText = sc.nextLine();
-            String secretKey = "MySecretKey"; // Replace this with your own key
+            System.out.println("Enter secret key");
+            String secretKey = sc.nextLine();
             String encryptedText = encrypt(originalText, secretKey);
             System.out.println("Encrypted: " + encryptedText);
 
